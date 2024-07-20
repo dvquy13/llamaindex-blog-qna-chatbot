@@ -6,8 +6,8 @@
 **/.env*
 !**/.env.example
 
-data/*
-!data/.gitkeep
+**/data/*
+!**/data/.gitkeep
 
 notebooks/*
 !notebooks/*.ipynb
