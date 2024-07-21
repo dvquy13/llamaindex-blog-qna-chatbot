@@ -6,9 +6,17 @@ authors = ["Quy Dinh <quy.dinh3195@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "3.11.9"
 scrapy = "^2.11.2"
 loguru = "^0.7.2"
+llama-index = "^0.10.56"
+llama-index-llms-ollama = "^0.1.6"
+llama-index-embeddings-huggingface = "^0.2.2"
+llama-index-embeddings-ollama = "^0.1.2"
+llama-index-vector-stores-chroma = "^0.1.10"
+llama-hub = "^0.0.79.post1"
+spacy = "^3.7.5"  # Required when using RagDatasetGenerator.from_documents
+matplotlib = "^3.9.1"
 
 
 [tool.poetry.group.dev.dependencies]
