@@ -26,7 +26,7 @@ class ManualAppendReferenceQueryEngine(RetrieverQueryEngine):
         return response_obj
 
     async def aquery(self, str_or_query_bundle: QueryType) -> RESPONSE_TYPE:
-        response_obj = await super().query(str_or_query_bundle)
+        response_obj = await super().aquery(str_or_query_bundle)
         sources_fmt = self._compile_sources(response_obj)
         if sources_fmt:
             response_fmt = f"""
@@ -46,7 +46,7 @@ class ManualAppendReferenceQueryEngine(RetrieverQueryEngine):
                 sources[url] = title
         if sources:
             refs = [f"[{title}]({url})" for url, title in sources.items()]
-            refs_fmt = "- ".join(refs)
+            refs_fmt = "\n- ".join(refs)
             if len(refs) == 1:
                 refs_fmt = f"- {refs_fmt}"
             output = f"""
