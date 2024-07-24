@@ -28,10 +28,13 @@ class LlamaBlogSpider(scrapy.Spider):
             link = post.css("p[class*='CardBlog_title__'] a::attr(href)").get()
             date = post.css("p:last-child::text").get()
             if link:
+                full_link = response.urljoin(link)
                 logger.opt(colors=True).info(
-                    f"Found article link: <blue>{link}</blue> with date: {date}"
+                    f"Found article link: <blue>{full_link}</blue> with date: {date}"
                 )
-                yield response.follow(link, self.parse_blog, meta={"date": date})
+                yield response.follow(
+                    full_link, self.parse_blog, meta={"date": date, "url": full_link}
+                )
 
         # Update and log the number of blogs found on the main page
         self.blog_count = len(blog_posts)
@@ -52,8 +55,9 @@ class LlamaBlogSpider(scrapy.Spider):
         tags = response.css("ul[class^='BlogPost_tags__'] li a span::text").getall()
         tags_text = ", ".join(tags)
 
-        # Retrieve the date from meta data
+        # Retrieve the date and URL from meta data
         date = response.meta.get("date")
+        url = response.meta.get("url")
 
         # Extract author from the detailed blog page
         author = response.css("p[class*='BlogPost_date__'] a::text").get()
@@ -61,7 +65,7 @@ class LlamaBlogSpider(scrapy.Spider):
         # Log the title, content length, author, date, and tags for sanity check
         content_length = len(full_content)
         logger.info(
-            f"Parsed blog post: {title} (Content length: {content_length} characters, Author: {author}, Date: {date}, Tags: {tags_text})"
+            f"Parsed blog post: {title} (Content length: {content_length} characters, Author: {author}, Date: {date}, Tags: {tags_text}, URL: {url})"
         )
 
         # Update total content length in custom stats
@@ -74,6 +78,7 @@ class LlamaBlogSpider(scrapy.Spider):
             "author": author,
             "date": date,
             "tags": tags,
+            "url": url,
         }
 
     def spider_closed(self, spider):
