@@ -46,9 +46,9 @@ class ManualAppendReferenceQueryEngine(RetrieverQueryEngine):
                 sources[url] = title
         if sources:
             refs = [f"[{title}]({url})" for url, title in sources.items()]
-            refs_fmt = "\n- ".join(refs)
-            if len(refs) == 1:
-                refs_fmt = f"- {refs_fmt}"
+            refs_fmt = ""
+            for ref in refs:
+                refs_fmt += f"- {ref}\n"
             output = f"""
 Sources:
 {refs_fmt}
