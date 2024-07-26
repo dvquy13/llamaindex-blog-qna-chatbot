@@ -11,6 +11,11 @@ from llama_index.core.evaluation import RetrieverEvaluator
 from llama_index.core.indices.vector_store.retrievers.retriever import (
     VectorIndexRetriever,
 )
+from llama_index.core.evaluation import (
+    generate_question_context_pairs,
+    EmbeddingQAFinetuneDataset,
+)
+from llama_index.llms.openai import OpenAI
 
 from src.run.cfg import RunConfig
 
@@ -57,16 +62,9 @@ class RetrievalEvaluator:
             """
 
             # Use good model to generate the eval dataset
-            from llama_index.llms.openai import OpenAI
-
             retrieval_eval_llm = OpenAI(
                 model=cfg.eval_cfg.retrieval_eval_llm_model,
                 **cfg.eval_cfg.retrieval_eval_llm_model_config,
-            )
-
-            from llama_index.core.evaluation import (
-                generate_question_context_pairs,
-                EmbeddingQAFinetuneDataset,
             )
 
             logger.info(f"Creating new synthetic retrieval eval dataset...")

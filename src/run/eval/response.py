@@ -89,6 +89,9 @@ class ResponseEvaluator:
                 response_synthetic_eval_dataset_fp
             )
         else:
+            response_synthetic_eval_dataset_fp = (
+                cfg.eval_cfg.response_synthetic_eval_dataset_fp
+            )
             logger.info(
                 f"Loading existing synthetic response eval dataset at {response_synthetic_eval_dataset_fp}..."
             )
@@ -114,7 +117,10 @@ class ResponseEvaluator:
         response_curated_eval_dataset = LabelledRagDataset(examples=examples)
 
         # save this dataset as it is required for the submission
-        response_curated_eval_dataset_fp = cfg.eval_cfg.response_curated_eval_dataset_fp
+        response_curated_eval_dataset_fp = (
+            f"{cfg.notebook_cache_dp}/response_curated_eval_dataset.json"
+        )
+        cfg.eval_cfg.response_curated_eval_dataset_fp = response_curated_eval_dataset_fp
         logger.info(
             f"Persisting curated response eval dataset at {response_curated_eval_dataset_fp}..."
         )

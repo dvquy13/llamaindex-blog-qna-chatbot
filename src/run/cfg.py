@@ -43,7 +43,7 @@ class EvalConfig(BaseModel):
         "ndcg",
     ]
     retrieval_eval_dataset_fp: str = (
-        "data/001/exp_006_semantic_chunking/llamaindex_blog_retrieval_eval_dataset.json"
+        "data/010_remove_title_extractor/retrieval_synthetic_eval_dataset.json"
     )
     question_gen_query: str = """
 You are a Retriever Evaluator. Your task is to generate {num_questions_per_chunk} questions to assess the accuracy/relevancy of an information retrieval system.
@@ -57,10 +57,10 @@ IMPORTANT RULES:
 """
 
     response_synthetic_eval_dataset_fp: str = (
-        "data/001/exp_007_semantic_chunking_full_refresh/response_synthetic_eval_dataset.json"
+        "data/010_remove_title_extractor/response_synthetic_eval_dataset.json"
     )
     response_curated_eval_dataset_fp: str = (
-        "data/001/exp_007_semantic_chunking_full_refresh/response_curated_eval_dataset.json"
+        "data/011_analyze_context/response_curated_eval_dataset.json"
     )
     response_eval_llm_model: str = "gpt-3.5-turbo"
     response_eval_llm_model_config: dict = {"temperature": 0.3}
@@ -71,9 +71,9 @@ IMPORTANT RULES:
 class RunConfig(BaseModel):
     args: RunInputArgs = None
     db_collection: str = (
-        "huggingface__BAAI_bge_large_en_v1_5__exp_006_semantic_chunking"
+        "huggingface__BAAI_bge_large_en_v1_5__010_remove_title_extractor"
     )
-    nodes_persist_fp: str = "data/001/exp_006_semantic_chunking/nodes.pkl"
+    nodes_persist_fp: str = "data/010_remove_title_extractor/nodes.pkl"
     notebook_cache_dp: str = None
 
     data_fp: str = "../crawl_llamaindex_blog/data/blogs-v2.json"
